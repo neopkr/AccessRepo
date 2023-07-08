@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "lib": ["es2018", "DOM"] // DOM IS FOR DEV, DELETE FOR PRODUCTION
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

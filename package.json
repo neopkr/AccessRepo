@@ -1,0 +1,23 @@
+{
+  "name": "repositoryloader",
+  "version": "1.0.0",
+  "description": "An library made on NodeJS for read private repositorys from Github",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc",
+    "build-run": "npx tsc & node dist/RepositoryLoader.js",
+    "start": "node dist/RepositoryLoader.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.4.1",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@octokit/rest": "^19.0.13",
+    "dotenv": "^16.3.1"
+  }
+}
