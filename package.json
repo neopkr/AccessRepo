@@ -1,6 +1,6 @@
 {
   "name": "accessrepo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A library made on NodeJS for read private repositorys from Github",
   "main": "dist/index.js",
   "scripts": {
