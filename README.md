@@ -20,12 +20,9 @@ let GITHUB_REPOSITORY = "RepositoryLoader";
 const repository = new Repository(GITHUB_ACCESS_TOKEN, GITHUB_USERNAME, GITHUB_REPOSITORY);
 repository.init(); // Load data from repository
 
-repository.on("initialized", () => {
-    repository.RepoURL(); // => string
-    repository.License(); // => string
-    repository.Owner(); // => string
-    // need more functions but i didn't priorize this class.
-})
+const license = repository.License();
+const URL = repository.RepoURL();
+const owner = repository.Owner();
 
 // Loader example
 const rl = Loader(GITHUB_ACCESS_TOKEN, GITHUB_USERNAME, GITHUB_REPOSITORY)
