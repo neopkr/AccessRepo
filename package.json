@@ -2,12 +2,12 @@
   "name": "repositoryloader",
   "version": "1.0.0",
   "description": "An library made on NodeJS for read private repositorys from Github",
-  "main": "index.js",
+  "main": "dist/GitRepository.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
-    "build-run": "npx tsc & node dist/RepositoryLoader.js",
-    "start": "node dist/RepositoryLoader.js"
+    "build-run": "npx tsc & node dist/GitRepository.js",
+    "start": "node dist/GitRepository.js"
   },
   "keywords": [],
   "author": "",

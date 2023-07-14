@@ -40,6 +40,35 @@ class Repository {
         return "Data cannot be loaded: undefined";
     }
 
+    /**
+     * Retorna la información básica del repositorio.
+     * @returns {Object} Un objeto con la siguiente estructura:
+     * @example
+     * Object {
+     *      name: string,
+     *      description: string,
+     *      private: boolean,
+     *      html_url: string,
+     *      lang: string,
+     *      default_branch: string
+     * }
+     */
+    public License(): any {
+        return {
+            license: this.data.license
+        }
+    }
+
+    /**
+     * Retorna los datos del dueño del repositorio.
+     * @returns {Array} Un array de elementos que contiene los datos del Owner del repositorio.
+     */
+    public Owner(): any {
+        return {
+            owner: this.data.owner,
+        }
+    }
+
     public on(eventName: string, handler: () => void): void {
         if (!this.eventHandlers[eventName]) {
             this.eventHandlers[eventName] = [];
@@ -55,7 +84,7 @@ class Repository {
     }
 }
 
-class RepositoryDirectory {
+class Loader {
     private authKey: string;
     private author: string;
     private repository: string;
@@ -119,4 +148,4 @@ class RepositoryDirectory {
     }
 }
 
-module.exports = { Repository, RepositoryDirectory };
+export { Repository, Loader }
