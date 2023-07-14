@@ -41,4 +41,5 @@ rl.ReadFile(/path/to/content/)
     })
 ```
 
-There is not other function in the classes because i build it only for read content in private repository so probably later add more functions
+There is not other function in the classes because i build it only for read content in private repository so probably later add more functions.
+[See more on GitHub](https://github.com/tu-usuario/tu-repositorio)
