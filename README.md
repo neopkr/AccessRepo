@@ -1,6 +1,11 @@
 # Repository
 A library made on NodeJS for read private repositorys from Github
 
+# Name history:
+- repositoryloader
+- gitrepository
+- @neokeee/gitrepository
+- accessrepo
 # Usage
 The usage of the lib is very easy because i created only for read private content and more in any time that i can spend in this lib.
 
