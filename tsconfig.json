@@ -5,10 +5,8 @@
     "outDir": "dist",
     "declaration": true,
     "declarationDir": "types",
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    "esModuleInterop": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules"]
 }

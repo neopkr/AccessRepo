@@ -6,40 +6,38 @@ class Repository {
     private repository: string;
     private kit: Octokit;
     private data: any;
-    private eventHandlers: { [eventName: string]: (() => void)[] };
-
+  
     constructor(authKey: string, author: string, repository: string) {
-        this.authKey = authKey;
-        this.author = author;
-        this.repository = repository;
-        this.kit = new Octokit({
-            auth: this.authKey
+      this.authKey = authKey;
+      this.author = author;
+      this.repository = repository;
+      this.kit = new Octokit({
+        auth: this.authKey
+      });
+      this.data = null;
+    }
+  
+    public async init(): Promise<void> {
+      try {
+        const response = await this.kit.repos.get({
+          owner: this.author,
+          repo: this.repository,
         });
-        this.data = null;
-        this.eventHandlers = {};
+        this.data = response.data;
+        this.triggerEvent("initialized"); // Dispara el evento "initialized"
+      } catch (error) {
+        console.error("Error occurred during initialization:", error);
+        throw error;
+      }
     }
-
-    public init(): void {
-        this.kit.repos.get({
-            owner: this.author,
-            repo: this.repository,
-        })
-            .then(response => {
-                this.data = response.data;
-                this.triggerEvent("initialized"); // Dispara el evento "initialized"
-            })
-            .catch(error => {
-                console.error("Error occurred during initialization:", error);
-            });
-    }
-
+  
     public RepoURL(): string {
-        if (this.data) {
-            return this.data.html_url;
-        }
-        return "Data cannot be loaded: undefined";
+      if (this.data) {
+        return this.data.html_url;
+      }
+      return "Data cannot be loaded: undefined";
     }
-
+  
     /**
      * Retorna la información básica del repositorio.
      * @returns {Object} Un objeto con la siguiente estructura:
@@ -54,35 +52,25 @@ class Repository {
      * }
      */
     public License(): any {
-        return {
-            license: this.data.license
-        }
+      return {
+        license: this.data?.license
+      };
     }
-
+  
     /**
      * Retorna los datos del dueño del repositorio.
      * @returns {Array} Un array de elementos que contiene los datos del Owner del repositorio.
      */
     public Owner(): any {
-        return {
-            owner: this.data.owner,
-        }
+      return {
+        owner: this.data?.owner,
+      };
     }
-
-    public on(eventName: string, handler: () => void): void {
-        if (!this.eventHandlers[eventName]) {
-            this.eventHandlers[eventName] = [];
-        }
-        this.eventHandlers[eventName].push(handler);
-    }
-
+  
     private triggerEvent(eventName: string): void {
-        const handlers = this.eventHandlers[eventName];
-        if (handlers) {
-            handlers.forEach(handler => handler());
-        }
+      // Lógica de eventos aquí (opcional)
     }
-}
+  }
 
 class Loader {
     private authKey: string;

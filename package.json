@@ -1,19 +1,24 @@
 {
-  "name": "@neokeee/gitrepository",
+  "name": "accessrepo",
   "version": "1.0.1",
   "description": "A library made on NodeJS for read private repositorys from Github",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require ts-node/register tests/**/*.spec.ts",
     "build": "npx tsc",
     "build-run": "npx tsc & node dist/index.js",
     "start": "node dist/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "neopkr",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^20.4.1",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   },
   "dependencies": {

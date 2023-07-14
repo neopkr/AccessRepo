@@ -1,4 +1,4 @@
-declare module 'Repository' {
+declare module 'accessrepo' {
     export class Repository {
         constructor(authKey: string, author: string, repository: string);
 
