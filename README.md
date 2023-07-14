@@ -5,12 +5,12 @@ A library made on NodeJS for read private repositorys from Github
 - repositoryloader
 - gitrepository
 - @neokeee/gitrepository
-- accessrepo
+- **accessrepo** (Actual)
 # Usage
 The usage of the lib is very easy because i created only for read private content and more in any time that i can spend in this lib.
 
 ```ts
-import { Repository, Loader } from 'repository'
+import { Repository, Loader } from 'accessrepo'
 
 // RepositoryLoader example, i gonna change to simple .then-catch in any time
 let GITHUB_ACCESS_TOKEN = "xxxx-xxxx-xxxx-xxxx";
