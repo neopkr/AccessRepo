@@ -1,4 +1,4 @@
-# Repository
+# AccessRepo
 A library made on NodeJS for read private repositorys from Github
 
 # Name history:
