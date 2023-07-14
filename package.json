@@ -1,13 +1,13 @@
 {
-  "name": "repositoryloader",
-  "version": "1.0.0",
-  "description": "An library made on NodeJS for read private repositorys from Github",
-  "main": "dist/GitRepository.js",
+  "name": "@neokeee/gitrepository",
+  "version": "1.0.1",
+  "description": "A library made on NodeJS for read private repositorys from Github",
+  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
-    "build-run": "npx tsc & node dist/GitRepository.js",
-    "start": "node dist/GitRepository.js"
+    "build-run": "npx tsc & node dist/index.js",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
