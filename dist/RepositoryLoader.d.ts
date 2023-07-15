@@ -6,7 +6,7 @@ declare class Repository {
     private data;
     constructor(authKey: string, author: string, repository: string);
     init(): Promise<void>;
-    RepoURL(): string;
+    getURL(): any;
     /**
      * Retorna la información básica del repositorio.
      * @returns {Object} Un objeto con la siguiente estructura:
@@ -20,20 +20,18 @@ declare class Repository {
      *      default_branch: string
      * }
      */
-    License(): any;
+    getLicense(): any;
     /**
      * Retorna los datos del dueño del repositorio.
      * @returns {Array} Un array de elementos que contiene los datos del Owner del repositorio.
      */
-    Owner(): any;
-    private triggerEvent;
+    getOwner(): any;
 }
 declare class Loader {
     private authKey;
     private author;
     private repository;
     private kit;
-    private data;
     constructor(authKey: string, author: string, repository: string);
     ReadFile(pathFile: string): Promise<any | null>;
 }

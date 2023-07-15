@@ -6,38 +6,37 @@ class Repository {
     private repository: string;
     private kit: Octokit;
     private data: any;
-  
+
     constructor(authKey: string, author: string, repository: string) {
-      this.authKey = authKey;
-      this.author = author;
-      this.repository = repository;
-      this.kit = new Octokit({
-        auth: this.authKey
-      });
-      this.data = null;
-    }
-  
-    public async init(): Promise<void> {
-      try {
-        const response = await this.kit.repos.get({
-          owner: this.author,
-          repo: this.repository,
+        this.authKey = authKey;
+        this.author = author;
+        this.repository = repository;
+        this.kit = new Octokit({
+            auth: this.authKey
         });
-        this.data = response.data;
-        this.triggerEvent("initialized"); // Dispara el evento "initialized"
-      } catch (error) {
-        console.error("Error occurred during initialization:", error);
-        throw error;
-      }
+        this.data = null;
+        this.init();
     }
-  
-    public RepoURL(): string {
-      if (this.data) {
-        return this.data.html_url;
-      }
-      return "Data cannot be loaded: undefined";
+
+    public async init(): Promise<void> {
+        try {
+            const response = await this.kit.repos.get({
+                owner: this.author,
+                repo: this.repository,
+            });
+            this.data = response.data;
+        } catch (error) {
+            console.error("Error occurred during initialization:", error);
+            throw error;
+        }
     }
-  
+
+    public getURL(): any {
+        return {
+            url: this.data?.html_url
+        }
+    }
+
     /**
      * Retorna la información básica del repositorio.
      * @returns {Object} Un objeto con la siguiente estructura:
@@ -51,33 +50,28 @@ class Repository {
      *      default_branch: string
      * }
      */
-    public License(): any {
-      return {
-        license: this.data?.license
-      };
+    public getLicense(): any {
+        return {
+            license: this.data?.license
+        };
     }
-  
+
     /**
      * Retorna los datos del dueño del repositorio.
      * @returns {Array} Un array de elementos que contiene los datos del Owner del repositorio.
      */
-    public Owner(): any {
-      return {
-        owner: this.data?.owner,
-      };
+    public getOwner(): any {
+        return {
+            owner: this.data?.owner,
+        };
     }
-  
-    private triggerEvent(eventName: string): void {
-      // Lógica de eventos aquí (opcional)
-    }
-  }
+}
 
 class Loader {
     private authKey: string;
     private author: string;
     private repository: string;
     private kit: Octokit;
-    private data: any;
 
     constructor(authKey: string, author: string, repository: string) {
         this.authKey = authKey;
@@ -86,7 +80,6 @@ class Loader {
         this.kit = new Octokit({
             auth: this.authKey
         });
-        this.data = null;
     }
 
     public async ReadFile(pathFile: string): Promise<any | null> {

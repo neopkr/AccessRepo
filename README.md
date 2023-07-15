@@ -18,11 +18,12 @@ let GITHUB_USERNAME = "neopkr";
 let GITHUB_REPOSITORY = "RepositoryLoader";
 
 const repository = new Repository(GITHUB_ACCESS_TOKEN, GITHUB_USERNAME, GITHUB_REPOSITORY);
-repository.init(); // Load data from repository
 
-const license = repository.License();
-const URL = repository.RepoURL();
-const owner = repository.Owner();
+const license = repository.getLicense();
+const URL = repository.getURL();
+const owner = repository.getOwner();
+
+// REPOSITORY CLASS ON TESTING CHECK 1.0.4 or README.md 
 
 // Loader example
 const rl = Loader(GITHUB_ACCESS_TOKEN, GITHUB_USERNAME, GITHUB_REPOSITORY)
@@ -68,4 +69,12 @@ Loader: Actually only have 1 function: ReadFile(/path/to/file); return the conte
 - Fixed [npm-publish.yml](https://github.com/neopkr/AccessRepo/blob/main/.github/workflows/npm-publish.yml) for login with token and clear cache with --force
 - Fixed bug with import in typescript ``Fixed types/index.d.ts to dist/index.d.ts``
 - Bug: ``Repository returns undefined``, change event.on to then-catch.
+* _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_
+### 1.0.4
+- Fixed some imports on javascript.
+- class Repository:
+    - ``RepoURL`` change name to: ``getURL`` and now returns: `` { url: ... } ``
+    - ``License`` change name to: ``getLicense``
+    - ``Owner`` change name to: ``getOwner``
+- Fixed: ```class Repository returns undefined``` should be fixed now at least inside of a async functions. _Check [repository.spec.ts](https://github.com/neopkr/AccessRepo/blob/main/tests/repository.spec.ts) for more information.
 * _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_

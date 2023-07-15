@@ -47,6 +47,7 @@ var Repository = /** @class */ (function () {
             auth: this.authKey
         });
         this.data = null;
+        this.init();
     }
     Repository.prototype.init = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -62,7 +63,6 @@ var Repository = /** @class */ (function () {
                     case 1:
                         response = _a.sent();
                         this.data = response.data;
-                        this.triggerEvent("initialized"); // Dispara el evento "initialized"
                         return [3 /*break*/, 3];
                     case 2:
                         error_1 = _a.sent();
@@ -73,11 +73,11 @@ var Repository = /** @class */ (function () {
             });
         });
     };
-    Repository.prototype.RepoURL = function () {
-        if (this.data) {
-            return this.data.html_url;
-        }
-        return "Data cannot be loaded: undefined";
+    Repository.prototype.getURL = function () {
+        var _a;
+        return {
+            url: (_a = this.data) === null || _a === void 0 ? void 0 : _a.html_url
+        };
     };
     /**
      * Retorna la información básica del repositorio.
@@ -92,7 +92,7 @@ var Repository = /** @class */ (function () {
      *      default_branch: string
      * }
      */
-    Repository.prototype.License = function () {
+    Repository.prototype.getLicense = function () {
         var _a;
         return {
             license: (_a = this.data) === null || _a === void 0 ? void 0 : _a.license
@@ -102,14 +102,11 @@ var Repository = /** @class */ (function () {
      * Retorna los datos del dueño del repositorio.
      * @returns {Array} Un array de elementos que contiene los datos del Owner del repositorio.
      */
-    Repository.prototype.Owner = function () {
+    Repository.prototype.getOwner = function () {
         var _a;
         return {
             owner: (_a = this.data) === null || _a === void 0 ? void 0 : _a.owner,
         };
-    };
-    Repository.prototype.triggerEvent = function (eventName) {
-        // Lógica de eventos aquí (opcional)
     };
     return Repository;
 }());
@@ -122,7 +119,6 @@ var Loader = /** @class */ (function () {
         this.kit = new rest_1.Octokit({
             auth: this.authKey
         });
-        this.data = null;
     }
     Loader.prototype.ReadFile = function (pathFile) {
         return __awaiter(this, void 0, void 0, function () {
