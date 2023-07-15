@@ -28,7 +28,7 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: npm adduser
+      - run: npm login
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
       - run: npm publish
