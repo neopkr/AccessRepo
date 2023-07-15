@@ -53,7 +53,16 @@ There is not other function in the classes because i build it only for read cont
 
 # Changelog
 ### 1.0.1
-...
+First Update, added two new classes:
+ - Repository
+ - Loader
+Repository: has the entire repository settings and data from the users/repo
+Loader: Actually only have 1 function: ReadFile(/path/to/file); return the content of the file that you select, file that is on your Github no on your local xd
 ### 1.0.2
-...
+- Added yaml for npm publish with github, added some test.
+- Change name to 'accessrepo'
+- Bug: ```Module 'accessrepo' not found``` for typescript.
 ### 1.0.3
+- Fixed [npm-publish.yml](https://github.com/neopkr/AccessRepo/blob/main/.github/workflows/npm-publish.yml) for login with token and clear cache with --force
+- Fixed bug with import in typescript ``Fixed types/index.d.ts to dist/index.d.ts``
+- Bug: ``Repository returns undefined``
