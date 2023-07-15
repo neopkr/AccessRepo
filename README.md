@@ -1,5 +1,5 @@
 # AccessRepo
-A library made on NodeJS for read private repositorys from Github
+A library made on NodeJS for read private repositorys from Github. See on [npm](https://www.npmjs.com/package/accessrepo)
 
 # Name history:
 - repositoryloader
