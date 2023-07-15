@@ -44,4 +44,16 @@ rl.ReadFile(/path/to/content/)
 ```
 
 There is not other function in the classes because i build it only for read content in private repository so probably later add more functions.
-[See more on GitHub](https://github.com/tu-usuario/tu-repositorio)
+[See more on GitHub](https://github.com/neopkr/AccessRepo/)
+
+## Versions
+- [1.0.1](https://github.com/neopkr/AccessRepo/releases/tag/1.0.1) __Unstable__ | [Changelog]()
+- [1.0.2](https://github.com/neopkr/AccessRepo/releases/tag/1.0.2) __Unstable__ | [Changelog]()
+- [1.0.3](https://github.com/neopkr/AccessRepo/releases/tag/1.0.3) __Stable__   | [Changelog]()
+
+# Changelog
+### 1.0.1
+...
+### 1.0.2
+...
+### 1.0.3
