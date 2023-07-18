@@ -15,18 +15,29 @@ import { Repository, Loader } from 'accessrepo'
 // RepositoryLoader example, i gonna change to simple .then-catch in any time
 let GITHUB_ACCESS_TOKEN = "xxxx-xxxx-xxxx-xxxx";
 let GITHUB_USERNAME = "neopkr";
-let GITHUB_REPOSITORY = "RepositoryLoader";
+let GITHUB_REPOSITORY = "AccessRepo"; // Main repository name changed version 1.0.3
 
 const repository = new Repository(GITHUB_ACCESS_TOKEN, GITHUB_USERNAME, GITHUB_REPOSITORY);
-
-const license = repository.getLicense();
-const URL = repository.getURL();
-const owner = repository.getOwner();
-
-// REPOSITORY CLASS ON TESTING CHECK 1.0.4 or README.md 
-
-// Loader example
 const rl = Loader(GITHUB_ACCESS_TOKEN, GITHUB_USERNAME, GITHUB_REPOSITORY)
+
+const myfunc = async () => {
+    await repository.init()
+    const lic = await repository.getLicense();
+    console.log(lic);
+};
+
+// Loader example (1)
+const licenseContent = async () => {
+    const license = await rl.ReadFile("LICENSE")
+    console.log(license.content)
+}
+
+myfunc()
+licenseContent()
+
+// REPOSITORY CLASS CHECKED 1.0.7
+
+// Loader example (2)
 rl.ReadFile(/path/to/content/)
     .then((content) => {
         if (content === null) { return; /* Handle null... */ }
@@ -51,7 +62,7 @@ There is not other function in the classes because i build it only for read cont
 - [1.0.1](https://github.com/neopkr/AccessRepo/releases/tag/1.0.1) __Unstable__ | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#101)
 - [1.0.2](https://github.com/neopkr/AccessRepo/releases/tag/1.0.2) __Unstable__ | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#102)
 - [1.0.3](https://github.com/neopkr/AccessRepo/releases/tag/1.0.3) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#103)
-- [1.0.4](https://github.com/neopkr/AccessRepo/releases/tag/1.0.4) __Pending__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#104)
+- [1.0.5](https://github.com/neopkr/AccessRepo/releases/tag/1.0.5) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#105)
 
 # Changelog
 ### 1.0.1
@@ -71,7 +82,8 @@ Loader: Actually only have 1 function: ReadFile(/path/to/file); return the conte
 - Fixed bug with import in typescript ``Fixed types/index.d.ts to dist/index.d.ts``
 - Bug: ``Repository returns undefined``, change event.on to then-catch.
 * _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_
-### 1.0.4
+### 1.0.5
+- Version 1.0.4 don't exist by problems with npm, [check workflow action error](https://github.com/neopkr/AccessRepo/actions/runs/5563240856)
 - Fixed some imports on javascript.
 - class Repository:
     - ``RepoURL`` change name to: ``getURL`` and now returns: `` { url: ... } ``
