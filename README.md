@@ -91,3 +91,18 @@ Loader: Actually only have 1 function: ReadFile(/path/to/file); return the conte
     - ``Owner`` change name to: ``getOwner``
 - Fixed: ```class Repository returns undefined``` should be fixed now at least inside of a async functions. _Check [repository.spec.ts](https://github.com/neopkr/AccessRepo/blob/main/tests/repository.spec.ts) for more information.
 * _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_
+### 1.0.6
+- Added new functions to Repository:
+    - ``getID()`` - Array (should be Number)
+    - ``getName()`` - Array
+    - ``getDescription()`` - Array
+    - ``getLanguage()`` - Array
+    - ``getVisibility()`` - Array
+    - ``getSuscribers()`` - Number
+    - ``getForks()`` - Number
+    - ``getWatchers()`` - Number
+    - ``getTopics()`` - Array
+    - ``isPrivate()`` - Boolean
+* _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_
+- Fixed some functions summarys and added new ones
+- For get file content use Loader.ReadFile() => Array.

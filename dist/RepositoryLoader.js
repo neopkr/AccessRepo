@@ -73,40 +73,277 @@ var Repository = /** @class */ (function () {
             });
         });
     };
-    Repository.prototype.getURL = function () {
+    /**
+     * Returns the repository ID
+     * @returns {Array} id: {}
+     */
+    Repository.prototype.getID = function () {
         var _a;
-        return {
-            url: (_a = this.data) === null || _a === void 0 ? void 0 : _a.html_url
-        };
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        if (this.data) {
+                            return [2 /*return*/, {
+                                    id: (_a = this.data) === null || _a === void 0 ? void 0 : _a.id
+                                }];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     /**
-     * Retorna la información básica del repositorio.
-     * @returns {Object} Un objeto con la siguiente estructura:
-     * @example
-     * Object {
-     *      name: string,
-     *      description: string,
-     *      private: boolean,
-     *      html_url: string,
-     *      lang: string,
-     *      default_branch: string
-     * }
+     * Returns the repository name
+     * @returns {Array} name: {}
+     */
+    Repository.prototype.getName = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        if (this.data) {
+                            return [2 /*return*/, {
+                                    name: (_a = this.data) === null || _a === void 0 ? void 0 : _a.name
+                                }];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Returns the repository description
+     * @returns {Array} description: {}
+     */
+    Repository.prototype.getDescription = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        if (this.data) {
+                            return [2 /*return*/, {
+                                    description: (_a = this.data) === null || _a === void 0 ? void 0 : _a.description
+                                }];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Returns the repository language
+     * @returns {Array} language: {}
+     */
+    Repository.prototype.getLanguage = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        if (this.data) {
+                            return [2 /*return*/, {
+                                    language: (_a = this.data) === null || _a === void 0 ? void 0 : _a.language
+                                }];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Returns the repository visibility
+     * @returns {Array} visibility: {}
+     */
+    Repository.prototype.getVisibility = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        if (this.data) {
+                            return [2 /*return*/, {
+                                    visibility: (_a = this.data) === null || _a === void 0 ? void 0 : _a.visibility
+                                }];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Returns the subscribers of the repository
+     * @returns {number}
+     */
+    Repository.prototype.getSuscribers = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        if (this.data) {
+                            return [2 /*return*/, (_a = this.data) === null || _a === void 0 ? void 0 : _a.subscribers_count];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Returns the Forks of the repository
+     * @returns {number}
+     */
+    Repository.prototype.getForks = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        if (this.data) {
+                            return [2 /*return*/, (_a = this.data) === null || _a === void 0 ? void 0 : _a.forks];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Returns the watchers of the repository
+     * @returns {number}
+     */
+    Repository.prototype.getWatchers = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        if (this.data) {
+                            return [2 /*return*/, (_a = this.data) === null || _a === void 0 ? void 0 : _a.watchers];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Returns the actual topics of the repository
+     * @returns {Array} topics: {}
+     */
+    Repository.prototype.getTopics = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        return [2 /*return*/, {
+                                topics: (_a = this.data) === null || _a === void 0 ? void 0 : _a.topics
+                            }];
+                }
+            });
+        });
+    };
+    /**
+     * Returns the repository is private
+     * @returns {boolean}
+     */
+    Repository.prototype.isPrivate = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        if (this.data) {
+                            if (((_a = this.data) === null || _a === void 0 ? void 0 : _a.private) === false) {
+                                return [2 /*return*/, false];
+                            }
+                            return [2 /*return*/, true];
+                        }
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Returns the html_url of the repository
+     * @returns {Array} url: {}
+     */
+    Repository.prototype.getURL = function () {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        if (this.data) {
+                            return [2 /*return*/, {
+                                    url: (_a = this.data) === null || _a === void 0 ? void 0 : _a.html_url
+                                }];
+                        }
+                        throw new Error("Data cannot be loaded: undefined");
+                }
+            });
+        });
+    };
+    /**
+     * Returns the actual license of the repository
+     * @returns {Array} license: {}
      */
     Repository.prototype.getLicense = function () {
         var _a;
-        return {
-            license: (_a = this.data) === null || _a === void 0 ? void 0 : _a.license
-        };
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        return [2 /*return*/, {
+                                license: (_a = this.data) === null || _a === void 0 ? void 0 : _a.license
+                            }];
+                }
+            });
+        });
     };
     /**
-     * Retorna los datos del dueño del repositorio.
-     * @returns {Array} Un array de elementos que contiene los datos del Owner del repositorio.
+     * Returns the owner information of the repository
+     * @returns {Array} owner: {}
      */
     Repository.prototype.getOwner = function () {
         var _a;
-        return {
-            owner: (_a = this.data) === null || _a === void 0 ? void 0 : _a.owner,
-        };
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.init()];
+                    case 1:
+                        _b.sent();
+                        return [2 /*return*/, {
+                                owner: (_a = this.data) === null || _a === void 0 ? void 0 : _a.owner,
+                            }];
+                }
+            });
+        });
     };
     return Repository;
 }());
@@ -120,6 +357,18 @@ var Loader = /** @class */ (function () {
             auth: this.authKey
         });
     }
+    /*
+    * @returns an object with the follow struct:
+    * @example
+    * Object {
+    *      name: string,
+    *      description: string,
+    *      private: boolean,
+    *      html_url: string,
+    *      lang: string,
+    *      default_branch: string
+    * }
+    */
     Loader.prototype.ReadFile = function (pathFile) {
         return __awaiter(this, void 0, void 0, function () {
             var response, fileData, decodedContent, data, error_2;
