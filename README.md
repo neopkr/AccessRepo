@@ -3,7 +3,7 @@
 ![NPM Build](https://img.shields.io/github/actions/workflow/status/neopkr/accessrepo/npm-publish.yml)
 
 # AccessRepo
-A library made on NodeJS for read private repositorys from Github. See on [npm](https://www.npmjs.com/package/accessrepo)
+A library made on NodeJS for read private repositorys from Github. See on [npm](https://www.npmjs.com/package/accessrepo?activeTab=readme)
 
 # Name history:
 - repositoryloader
