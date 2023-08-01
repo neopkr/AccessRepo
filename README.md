@@ -1,3 +1,6 @@
+![NPM Version](https://img.shields.io/npm/v/accessrepo) 
+![Downloads](https://img.shields.io/npm/dm/accessrepo)
+
 # AccessRepo
 A library made on NodeJS for read private repositorys from Github. See on [npm](https://www.npmjs.com/package/accessrepo)
 
