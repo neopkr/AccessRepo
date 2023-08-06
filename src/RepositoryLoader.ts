@@ -1,4 +1,5 @@
 import { Octokit } from "@octokit/rest";
+import axios from "axios"
 
 class Repository {
     private authKey: string;
@@ -205,15 +206,17 @@ class Loader {
             auth: this.authKey
         });
     }
-    /*
+    /**
+    * Read file from Github Repository
     * @returns an object with the follow struct:
     * @example
+    * Loader.ReadFile("src/RepositoryLoader.ts")
     * Object {
-    *      name: string,
-    *      description: string,
-    *      private: boolean,
-    *      html_url: string,
-    *      lang: string,
+    *      name: "RepositoryLoader.ts",
+    *      description: "",
+    *      private: true,
+    *      html_url: "https://github.com/neopkr/AccessRepo/blob/main/src/RepositoryLoader.ts",
+    *      lang: "typescript",
     *      default_branch: string
     * }
     */
@@ -260,6 +263,36 @@ class Loader {
         } catch (error) {
             console.error("Error occurred while reading file:", error);
             throw error;
+        }
+    }
+
+    /**
+     * 
+     * @param workflow Name of your workflow, example: npm-workflow.yml
+     * @returns 
+     */
+    public async getWorkflow(workflow: string): Promise<"success" | "failed" | "pending" | "not_found"> {
+        // https://github.com/author/repo/actions/workflows/workflow.yml
+        const apiUrl = `https://api.github.com/repos/${this.author}/${this.repository}/actions/workflows/${workflow}/runs`;
+        try {
+            const response = await axios.get(apiUrl, {
+                "headers": {
+                    Authorization: `token ${this.authKey}`
+                }
+            });
+
+            if (response.data.workflow_runs && response.data.workflow_runs.length > 0) {
+                const latestRun = response.data.workflow_runs[0];
+                if (latestRun.status === 'completed') {
+                    return latestRun.conclusion === 'success' ? 'success' : 'failed';
+                } else {
+                    return 'pending';
+                }
+            } else {
+                return 'not_found'
+            }
+        } catch (error) {
+            console.error("Error fetching workflow status: ", error.message);
         }
     }
 }

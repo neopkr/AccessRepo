@@ -35,9 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Loader = exports.Repository = void 0;
 var rest_1 = require("@octokit/rest");
+var axios_1 = __importDefault(require("axios"));
 var Repository = /** @class */ (function () {
     function Repository(authKey, author, repository) {
         this.authKey = authKey;
@@ -405,6 +409,45 @@ var Loader = /** @class */ (function () {
                         console.error("Error occurred while reading file:", error_2);
                         throw error_2;
                     case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Loader.prototype.getWorkflow = function (workflow) {
+        return __awaiter(this, void 0, void 0, function () {
+            var apiUrl, response, latestRun, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        apiUrl = "https://api.github.com/repos/".concat(this.author, "/").concat(this.repository, "/actions/workflows/").concat(workflow, "/runs");
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, axios_1.default.get(apiUrl, {
+                                "headers": {
+                                    Authorization: "token ".concat(this.authKey)
+                                }
+                            })];
+                    case 2:
+                        response = _a.sent();
+                        if (response.data.workflow_runs && response.data.workflow_runs.length > 0) {
+                            latestRun = response.data.workflow_runs[0];
+                            if (latestRun.status === 'completed') {
+                                return [2 /*return*/, latestRun.conclusion === 'success' ? 'success' : 'failed'];
+                            }
+                            else {
+                                return [2 /*return*/, 'pending'];
+                            }
+                        }
+                        else {
+                            return [2 /*return*/, 'not_found'];
+                        }
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_3 = _a.sent();
+                        console.error("Error fetching workflow status: ", error_3.message);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

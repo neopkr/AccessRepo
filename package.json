@@ -1,6 +1,6 @@
 {
   "name": "accessrepo",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A library made on NodeJS for read private repositorys from Github",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^19.0.13",
+    "axios": "^1.4.0",
     "dotenv": "^16.3.1"
   }
 }

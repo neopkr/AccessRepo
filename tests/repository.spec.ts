@@ -80,4 +80,10 @@ describe('Loader', () => {
         expect(fileData).to.have.property('content');
         expect(fileData).to.have.property('links');
     });
+
+    it('should retrieve workflow last run status (success, failed, pending, not_found)', async () => { // Success
+        const workflowStatus = await loader.getWorkflow("npm-publish.yml")
+        console.log(workflowStatus);
+        expect(workflowStatus).to.not.be.null;
+    })
 });

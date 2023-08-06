@@ -111,3 +111,5 @@ Loader: Actually only have 1 function: ReadFile(/path/to/file); return the conte
 * _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_
 - Fixed some functions summarys and added new ones
 - For get file content use Loader.ReadFile() => Array.
+### 1.0.7
+- [x] Add workflow on Loader (2023-08-05)

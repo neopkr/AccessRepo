@@ -79,5 +79,6 @@ declare class Loader {
     private kit;
     constructor(authKey: string, author: string, repository: string);
     ReadFile(pathFile: string): Promise<any | null>;
+    getWorkflow(workflow: any): Promise<"failed" | "pending" | "success" | "not_found">;
 }
 export { Repository, Loader };
