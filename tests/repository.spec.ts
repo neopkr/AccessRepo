@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { Repository, Loader } from '../src/RepositoryLoader';
 
 describe('Repository', () => {
-    const authKey = ""; // access token
+    const authKey = process.env.AUTH_KEY ?? "";
     const author = "neopkr";
     const repository = "AccessRepo";
 
@@ -59,7 +59,7 @@ describe('Repository', () => {
 
 
 describe('Loader', () => {
-    const authKey = "" // access token
+    const authKey = process.env.AUTH_KEY ?? ""; // env for action secret
     const author = "neopkr";
     const repository = "AccessRepo";
 
@@ -71,7 +71,7 @@ describe('Loader', () => {
 
     it('should read a file successfully', async () => {
         const pathFile = '/README.md';
-        const fileData = await loader.ReadFile(pathFile);
+        const fileData = await loader.readFile(pathFile); // Function changed v1.0.7
         expect(fileData).to.not.be.null;
         expect(fileData).to.have.property('name');
         expect(fileData).to.have.property('path');
@@ -83,7 +83,13 @@ describe('Loader', () => {
 
     it('should retrieve workflow last run status (success, failed, pending, not_found)', async () => { // Success
         const workflowStatus = await loader.getWorkflow("npm-publish.yml")
-        console.log(workflowStatus);
         expect(workflowStatus).to.not.be.null;
     })
+
+    it("should retrieve last workflow run of the repository", async () => {
+        const lastWorkflowStatus = await loader.getLastWorkflow();
+        expect(lastWorkflowStatus).to.not.be.null;
+    })
+
+    // took 1000ms
 });

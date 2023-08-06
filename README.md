@@ -112,4 +112,22 @@ Loader: Actually only have 1 function: ReadFile(/path/to/file); return the conte
 - Fixed some functions summarys and added new ones
 - For get file content use Loader.ReadFile() => Array.
 ### 1.0.7
-- [x] Add workflow on Loader (2023-08-05)
+- Added ```getWorflow(workflow: string)``` to Loader class. This returns the last run of the workflow action: sucess, failed, pending or not found.
+- Example:
+```ts
+const func = async () => {
+    const workflowStatus = await Loader.getWorkflow("npm-publish.yml")
+    if (workflowStatus === "not_found") {
+        console.log("Error: Workflow not found.");
+        return;
+    }
+    console.log(workflowStatus) // success, failed, pending
+    if (workflowStatus === "success") {
+        return "Build passing";
+    }
+}
+
+Loader.getWorkflow("npm-publish.yml").then((action) => console.log(action)) // success, failed, pending, not_found
+```
+- Rename function ```ReadFile()``` to ```readFile()``` for keep consistency.
+- New function on Loader class: ```getLastWorkflow()```, get last workflow action used on repository.

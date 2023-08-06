@@ -1,6 +1,13 @@
 import { Octokit } from "@octokit/rest";
 import axios from "axios"
 
+/**
+ * @name Repository
+ * @description Read the configuration/repository content from Github
+ * @param authKey Access Token from Github. Get yours at: ```https://github.com/settings/apps``` on Personal access token.
+ * @param author Repository author, owner
+ * @param repository Repository name
+ */
 class Repository {
     private authKey: string;
     private author: string;
@@ -192,6 +199,13 @@ class Repository {
     }
 }
 
+/**
+ * @name Loader
+ * @description Read files and workflows from Github repository.
+ * @param authKey Access Token from Github. Get yours at: ```https://github.com/settings/apps``` on Personal access token.
+ * @param author Repository author, owner
+ * @param repository Repository name
+ */
 class Loader {
     private authKey: string;
     private author: string;
@@ -220,7 +234,7 @@ class Loader {
     *      default_branch: string
     * }
     */
-    public async ReadFile(pathFile: string): Promise<any | null> {
+    public async readFile(pathFile: string): Promise<any | null> {
         try {
             const response = await this.kit.request(`GET /repos/{owner}/{repo}/contents/{path}`, {
                 owner: this.author,
@@ -267,12 +281,11 @@ class Loader {
     }
 
     /**
-     * 
+     * Retrive Workflow last run information
      * @param workflow Name of your workflow, example: npm-workflow.yml
-     * @returns 
+     * @returns success | failed | pending | not_found
      */
     public async getWorkflow(workflow: string): Promise<"success" | "failed" | "pending" | "not_found"> {
-        // https://github.com/author/repo/actions/workflows/workflow.yml
         const apiUrl = `https://api.github.com/repos/${this.author}/${this.repository}/actions/workflows/${workflow}/runs`;
         try {
             const response = await axios.get(apiUrl, {
@@ -293,6 +306,49 @@ class Loader {
             }
         } catch (error) {
             console.error("Error fetching workflow status: ", error.message);
+        }
+    }
+    /**
+     * Get the last workflow action run of the repository.
+     * @returns [runName, runUrl, runPath, workflowName, workflowStatus]
+     * @example
+     * Loader.getLastWorkflow() // Get last workflow of AccessRepo
+     * ["Node.js Package", ".github/workflows/npm-publish.yml", "https://api.github.com/repos/neopkr/AccessRepo/actions/workflows/63214888", "npm-publish.yml", "success"]
+     * @ignore workflowStatus uses getWorkflow() function, returns: success, failed, pending or not_found
+     */
+    public async getLastWorkflow(): Promise<any[]> {
+        const apiUrl = `https://api.github.com/repos/${this.author}/${this.repository}/actions/workflows`;
+
+        try {
+            const response = await axios.get(apiUrl, {
+                headers: {
+                    Authorization: `token ${this.authKey}`,
+                },
+            });
+
+            const workflows = response.data.workflows;
+            const lastRuns = []; // Store last run on array
+
+            for (const workflow of workflows) {
+                const runsUrl = workflow.url;
+                const runName = workflow.name;
+                const path = workflow.path;
+                const workflowName = String(path).split('/').slice(-1)[0]
+                const workflowStatus = await this.getWorkflow(workflowName)
+                
+                lastRuns.push(
+                    runName,
+                    runsUrl,
+                    path,
+                    workflowName,
+                    workflowStatus
+                )
+            }
+
+            return lastRuns;
+        } catch (error) {
+            console.error('Error al obtener la última ejecución de los workflows:', error.message);
+            return [];
         }
     }
 }

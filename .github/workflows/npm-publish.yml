@@ -15,8 +15,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: npm ci
-      - run: npm test
+      - name: Install dependencies
+        run: npm ci
+      - name: Running Test
+        env:
+          AUTH_KEY: ${{ secrets.AUTH_KEY }}
+        run: npm test
 
   publish-npm:
     needs: build

@@ -42,6 +42,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Loader = exports.Repository = void 0;
 var rest_1 = require("@octokit/rest");
 var axios_1 = __importDefault(require("axios"));
+/**
+ * @name Repository
+ * @description Read the configuration/repository content from Github
+ * @param authKey Access Token from Github. Get yours at: ```https://github.com/settings/apps``` on Personal access token.
+ * @param author Repository author, owner
+ * @param repository Repository name
+ */
 var Repository = /** @class */ (function () {
     function Repository(authKey, author, repository) {
         this.authKey = authKey;
@@ -352,6 +359,13 @@ var Repository = /** @class */ (function () {
     return Repository;
 }());
 exports.Repository = Repository;
+/**
+ * @name Loader
+ * @description Read files and workflows from Github repository.
+ * @param authKey Access Token from Github. Get yours at: ```https://github.com/settings/apps``` on Personal access token.
+ * @param author Repository author, owner
+ * @param repository Repository name
+ */
 var Loader = /** @class */ (function () {
     function Loader(authKey, author, repository) {
         this.authKey = authKey;
@@ -361,19 +375,21 @@ var Loader = /** @class */ (function () {
             auth: this.authKey
         });
     }
-    /*
+    /**
+    * Read file from Github Repository
     * @returns an object with the follow struct:
     * @example
+    * Loader.ReadFile("src/RepositoryLoader.ts")
     * Object {
-    *      name: string,
-    *      description: string,
-    *      private: boolean,
-    *      html_url: string,
-    *      lang: string,
+    *      name: "RepositoryLoader.ts",
+    *      description: "",
+    *      private: true,
+    *      html_url: "https://github.com/neopkr/AccessRepo/blob/main/src/RepositoryLoader.ts",
+    *      lang: "typescript",
     *      default_branch: string
     * }
     */
-    Loader.prototype.ReadFile = function (pathFile) {
+    Loader.prototype.readFile = function (pathFile) {
         return __awaiter(this, void 0, void 0, function () {
             var response, fileData, decodedContent, data, error_2;
             return __generator(this, function (_a) {
@@ -413,6 +429,11 @@ var Loader = /** @class */ (function () {
             });
         });
     };
+    /**
+     * Retrive Workflow last run information
+     * @param workflow Name of your workflow, example: npm-workflow.yml
+     * @returns success | failed | pending | not_found
+     */
     Loader.prototype.getWorkflow = function (workflow) {
         return __awaiter(this, void 0, void 0, function () {
             var apiUrl, response, latestRun, error_3;
@@ -448,6 +469,60 @@ var Loader = /** @class */ (function () {
                         console.error("Error fetching workflow status: ", error_3.message);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Get the last workflow action run of the repository.
+     * @returns [runName, runUrl, runPath, workflowName, workflowStatus]
+     * @example
+     * Loader.getLastWorkflow() // Get last workflow of AccessRepo
+     * ["Node.js Package", ".github/workflows/npm-publish.yml", "https://api.github.com/repos/neopkr/AccessRepo/actions/workflows/63214888", "npm-publish.yml", "success"]
+     * @ignore workflowStatus uses getWorkflow() function, returns: success, failed, pending or not_found
+     */
+    Loader.prototype.getLastWorkflow = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var apiUrl, response, workflows, lastRuns, _i, workflows_1, workflow, runsUrl, runName, path, workflowName, workflowStatus, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        apiUrl = "https://api.github.com/repos/".concat(this.author, "/").concat(this.repository, "/actions/workflows");
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 7, , 8]);
+                        return [4 /*yield*/, axios_1.default.get(apiUrl, {
+                                headers: {
+                                    Authorization: "token ".concat(this.authKey),
+                                },
+                            })];
+                    case 2:
+                        response = _a.sent();
+                        workflows = response.data.workflows;
+                        lastRuns = [];
+                        _i = 0, workflows_1 = workflows;
+                        _a.label = 3;
+                    case 3:
+                        if (!(_i < workflows_1.length)) return [3 /*break*/, 6];
+                        workflow = workflows_1[_i];
+                        runsUrl = workflow.url;
+                        runName = workflow.name;
+                        path = workflow.path;
+                        workflowName = String(path).split('/').slice(-1)[0];
+                        return [4 /*yield*/, this.getWorkflow(workflowName)];
+                    case 4:
+                        workflowStatus = _a.sent();
+                        lastRuns.push(runName, runsUrl, path, workflowName, workflowStatus);
+                        _a.label = 5;
+                    case 5:
+                        _i++;
+                        return [3 /*break*/, 3];
+                    case 6: return [2 /*return*/, lastRuns];
+                    case 7:
+                        error_4 = _a.sent();
+                        console.error('Error al obtener la última ejecución de los workflows:', error_4.message);
+                        return [2 /*return*/, []];
+                    case 8: return [2 /*return*/];
                 }
             });
         });
