@@ -68,6 +68,7 @@ There is not other function in the classes because i build it only for read cont
 - [1.0.3](https://github.com/neopkr/AccessRepo/releases/tag/1.0.3) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#103)
 - [1.0.5](https://github.com/neopkr/AccessRepo/releases/tag/1.0.5) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#105)
 - [1.0.6](https://github.com/neopkr/AccessRepo/releases/tag/1.0.6) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#106)
+- [1.0.7](https://github.com/neopkr/AccessRepo/releases/tag/1.0.6) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#107)
 
 # Changelog
 ### 1.0.1
