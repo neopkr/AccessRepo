@@ -140,3 +140,23 @@ Loader.getWorkflow("npm-publish.yml").then((action) => console.log(action)) // s
 - Error menssages translated it to english.
 - If you having HTTP Status o errors see: [Errors](https://github.com/neopkr/AccessRepo/blob/main/README.md#Errors) section.
 * _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_
+### 1.0.9
+- Very light update, added one fundamental function on Loader class
+- New function: ```readFileFromTree(tree: string, filePath: string)``` read file from selected tags or branches, usage example:
+```ts
+Loader.readFileFromTree("1.0.8", 'src/RepositoryLoader.ts').then((content) => {
+    if (content === null) { return; }
+    console.log(content);
+    /* content output:
+                {
+                    "name": ...,
+                    "path": ...,
+                    "download_url": ...,
+                    "html_url": ...,
+                    "content": ...,
+                    "links": { ... },
+                }
+        */
+})
+- Changed workflow, deleted npm adduser.
+```

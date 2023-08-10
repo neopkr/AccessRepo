@@ -98,6 +98,18 @@ describe('Loader', () => {
         expect(fileData).to.have.property('links');
     });
 
+    it('should read a file from tree successfully', async () => {
+        const pathFile = '/README.md';
+        const fileData = await loader.readFileFromTree("1.0.8", pathFile);
+        expect(fileData).to.not.be.null;
+        expect(fileData).to.have.property('name');
+        expect(fileData).to.have.property('path');
+        expect(fileData).to.have.property('download_url');
+        expect(fileData).to.have.property('html_url');
+        expect(fileData).to.have.property('content');
+        expect(fileData).to.have.property('links');
+    });
+
     it('should retrieve workflow last run status (success, failed, pending, not_found)', async () => { // Success
         const workflowStatus = await loader.getWorkflow("npm-publish.yml")
         expect(workflowStatus).to.not.be.null;

@@ -212,8 +212,8 @@ class Repository {
             });
 
             const publishedVersions = response.data
-            .filter(release => !release.prerelease)
-            .map(release => release.tag_name);
+                .filter(release => !release.prerelease)
+                .map(release => release.tag_name);
 
             return publishedVersions;
         } catch (error) {
@@ -234,15 +234,15 @@ class Repository {
                     Authorization: `token ${this.authKey}`
                 }
             });
-      
-          const preReleaseVersions = response.data
-            .filter(release => release.prerelease)
-            .map(release => release.tag_name);
-      
-          return preReleaseVersions;
+
+            const preReleaseVersions = response.data
+                .filter(release => release.prerelease)
+                .map(release => release.tag_name);
+
+            return preReleaseVersions;
         } catch (error) {
-          console.error('Error trying to get pre-release versions:', error.message);
-          return [];
+            console.error('Error trying to get pre-release versions:', error.message);
+            return [];
         }
     }
 
@@ -341,6 +341,57 @@ class Loader {
             throw error;
         }
     }
+
+    public async readFileFromTree(tree: string, pathFile: string): Promise<any | null> {
+        try {
+            const response = await this.kit.request(`GET /repos/{owner}/{repo}/git/trees/{tree_sha}`, {
+                owner: this.author,
+                repo: this.repository,
+                tree_sha: tree,
+            });
+
+            const treeData = response.data.tree as Array<{
+                type: "blob" | "tree" | "commit";
+                path: string;
+                mode: string;
+                sha: string;
+                size?: number;
+                url: string;
+            }>;
+
+            const file = treeData.find(item => item.path === pathFile);
+
+            if (file && file.type === 'blob') {
+                const fileResponse = await this.kit.request(`GET /repos/{owner}/{repo}/git/blobs/{sha}`, {
+                    owner: this.author,
+                    repo: this.repository,
+                    sha: file.sha,
+                });
+
+                const fileData = fileResponse.data as {
+                    content: string;
+                    encoding: "base64";
+                    url: string;
+                };
+
+                const decodedContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
+                const data = {
+                    "name": pathFile,
+                    "path": file.path,
+                    "content": decodedContent,
+                    "url": fileData.url,
+                };
+
+                return data;
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error("Error occurred while reading file from tree:", error);
+            throw error;
+        }
+    }
+
 
     /**
      * Retrive Workflow last run information
