@@ -71,7 +71,7 @@ There is not other function in the classes because i build it only for read cont
 - [1.0.6](https://github.com/neopkr/AccessRepo/releases/tag/1.0.6) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#106)
 - [1.0.7](https://github.com/neopkr/AccessRepo/releases/tag/1.0.7) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#107)
 - [1.0.8](https://github.com/neopkr/AccessRepo/releases/tag/1.0.8) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#108)
-- [1.0.9](https://github.com/neopkr/AccessRepo/releases/tag/1.0.9) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#109)
+- [1.0.9](https://github.com/neopkr/AccessRepo/releases/tag/1.0.9) __Unstable__ | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#109)
 # Changelog
 ### 1.0.1
 First Update, added two new classes:
@@ -142,6 +142,7 @@ Loader.getWorkflow("npm-publish.yml").then((action) => console.log(action)) // s
 - If you having HTTP Status o errors see: [Errors](https://github.com/neopkr/AccessRepo/blob/main/README.md#Errors) section.
 * _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_
 ### 1.0.9
+- Build not passing: ```readFileFromTree()``` always return null
 - Very light update, added one fundamental function on Loader class
 - New function: ```readFileFromTree(tree: string, filePath: string)``` read file from selected tags or branches, usage example:
 ```ts
