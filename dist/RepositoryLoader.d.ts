@@ -122,6 +122,7 @@ declare class Loader {
     * }
     */
     readFile(pathFile: string): Promise<any | null>;
+    readFileFromTree(tree: string, pathFile: string): Promise<any | null>;
     /**
      * Retrive Workflow last run information
      * @param workflow Name of your workflow, example: npm-workflow.yml

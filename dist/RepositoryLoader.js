@@ -358,6 +358,42 @@ class Loader {
             }
         });
     }
+    readFileFromTree(tree, pathFile) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const response = yield this.kit.request(`GET /repos/{owner}/{repo}/git/trees/{tree_sha}`, {
+                    owner: this.author,
+                    repo: this.repository,
+                    tree_sha: tree,
+                });
+                const treeData = response.data.tree;
+                const file = treeData.find(item => item.path === pathFile);
+                if (file && file.type === 'blob') {
+                    const fileResponse = yield this.kit.request(`GET /repos/{owner}/{repo}/git/blobs/{sha}`, {
+                        owner: this.author,
+                        repo: this.repository,
+                        sha: file.sha,
+                    });
+                    const fileData = fileResponse.data;
+                    const decodedContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
+                    const data = {
+                        "name": pathFile,
+                        "path": file.path,
+                        "content": decodedContent,
+                        "url": fileData.url,
+                    };
+                    return data;
+                }
+                else {
+                    return null;
+                }
+            }
+            catch (error) {
+                console.error("Error occurred while reading file from tree:", error);
+                throw error;
+            }
+        });
+    }
     /**
      * Retrive Workflow last run information
      * @param workflow Name of your workflow, example: npm-workflow.yml
