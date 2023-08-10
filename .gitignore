@@ -125,7 +125,9 @@ out
 .yarn/install-state.gz
 .pnp.*
 
-
 # repo
 .txt
 data.txt
+
+# macOS
+.DS_Store

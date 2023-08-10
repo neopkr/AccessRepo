@@ -1,10 +1,12 @@
 import { expect } from 'chai';
 import { Repository, Loader } from '../src/RepositoryLoader';
+import dotenv from "dotenv"
+dotenv.config(); // Use local
 
 describe('Repository', () => {
     const authKey = process.env.AUTH_KEY ?? "";
     const author = "neopkr";
-    const repository = "AccessRepo";
+    const repository = "code-engine"; // using private repository now for test
 
     let repo: Repository;
 
@@ -26,7 +28,7 @@ describe('Repository', () => {
     it("Retrieve boolean of repository state (public/private)", async () => {
         try {
             const isPriv = await repo.isPrivate(); // Wait for the promise to resolve
-            expect(isPriv).to.be.false
+            expect(isPriv).to.be.true // Previous update this was false for pass the test, because AccessRepo is public
         } catch (error) {
             console.error("Error occurred while retrieving repository information:", error);
             throw error;
@@ -55,6 +57,21 @@ describe('Repository', () => {
             throw error;
         }
     });
+
+    it("should retrieve published releases versions", async () => {
+        const releases = await repo.getPublishedVersions();
+        expect(releases).to.be.an("array");
+    })
+
+    it("should retrieve published pre-releases versions", async () => {
+        const preReleases = await repo.getPreReleaseVersions();
+        expect(preReleases).to.be.an("array");
+    })
+
+    it("should retrieve published all versions", async () => {
+        const allReleases = await repo.getAllVersions();
+        expect(allReleases).to.be.an("array");
+    })
 });
 
 

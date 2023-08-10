@@ -78,6 +78,21 @@ declare class Repository {
      * @returns {Array} owner: {}
      */
     getOwner(): Promise<any>;
+    /**
+     * Get current published release versions available of the repository
+     * @returns {Array} [...versions]
+     */
+    getPublishedVersions(): Promise<any>;
+    /**
+     * Get current published pre-release versions available of the repository
+     * @returns {Array} [...versions]
+     */
+    getPreReleaseVersions(): Promise<any>;
+    /**
+     * Get all published versions (pre-release and release)
+     * @returns {Array} [...versions]
+     */
+    getAllVersions(): Promise<any>;
 }
 /**
  * @name Loader

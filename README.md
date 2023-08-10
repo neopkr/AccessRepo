@@ -16,10 +16,9 @@ The usage of the lib is very easy because i created only for read private conten
 ```ts
 import { Repository, Loader } from 'accessrepo'
 
-// RepositoryLoader example, i gonna change to simple .then-catch in any time
 let GITHUB_ACCESS_TOKEN = "xxxx-xxxx-xxxx-xxxx";
 let GITHUB_USERNAME = "neopkr";
-let GITHUB_REPOSITORY = "AccessRepo"; // Main repository name changed version 1.0.3
+let GITHUB_REPOSITORY = "AccessRepo";
 
 const repository = new Repository(GITHUB_ACCESS_TOKEN, GITHUB_USERNAME, GITHUB_REPOSITORY);
 const rl = Loader(GITHUB_ACCESS_TOKEN, GITHUB_USERNAME, GITHUB_REPOSITORY)
@@ -38,8 +37,6 @@ const licenseContent = async () => {
 
 myfunc()
 licenseContent()
-
-// REPOSITORY CLASS CHECKED 1.0.7
 
 // Loader example (2)
 rl.ReadFile(/path/to/content/)
@@ -62,14 +59,18 @@ rl.ReadFile(/path/to/content/)
 There is not other function in the classes because i build it only for read content in private repository so probably later add more functions.
 [See more on GitHub](https://github.com/neopkr/AccessRepo/)
 
+## Errors
+- If you are getting error HTTP Status 403 check the token that are you using or check token permissions.
+- If you get another errors: [Create a new issue or check if exist](https://github.com/neopkr/AccessRepo/issues)
+
 ## Versions
 - [1.0.1](https://github.com/neopkr/AccessRepo/releases/tag/1.0.1) __Unstable__ | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#101)
 - [1.0.2](https://github.com/neopkr/AccessRepo/releases/tag/1.0.2) __Unstable__ | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#102)
 - [1.0.3](https://github.com/neopkr/AccessRepo/releases/tag/1.0.3) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#103)
 - [1.0.5](https://github.com/neopkr/AccessRepo/releases/tag/1.0.5) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#105)
 - [1.0.6](https://github.com/neopkr/AccessRepo/releases/tag/1.0.6) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#106)
-- [1.0.7](https://github.com/neopkr/AccessRepo/releases/tag/1.0.6) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#107)
-
+- [1.0.7](https://github.com/neopkr/AccessRepo/releases/tag/1.0.7) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#107)
+- [1.0.8](https://github.com/neopkr/AccessRepo/releases/tag/1.0.8) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#108)
 # Changelog
 ### 1.0.1
 First Update, added two new classes:
@@ -132,3 +133,10 @@ Loader.getWorkflow("npm-publish.yml").then((action) => console.log(action)) // s
 ```
 - Rename function ```ReadFile()``` to ```readFile()``` for keep consistency.
 - New function on Loader class: ```getLastWorkflow()```, get last workflow action used on repository.
+### 1.0.8
+- New Release, new functions.
+- New functions on Repository class: ```getPublishVersions(), getPreReleaseVersions(), getAllVersions()```, all returns an array with the list of public versions on github.
+- Maybe on next version v1.1.0 Loader class would be deleted and added all functions to Repository class.
+- Error menssages translated it to english.
+- If you having HTTP Status o errors see: [Errors](https://github.com/neopkr/AccessRepo/blob/main/README.md#Errors) section.
+* _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_

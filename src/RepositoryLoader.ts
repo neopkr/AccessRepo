@@ -1,5 +1,5 @@
 import { Octokit } from "@octokit/rest";
-import axios from "axios"
+import axios, { all } from "axios"
 
 /**
  * @name Repository
@@ -197,6 +197,68 @@ class Repository {
             owner: this.data?.owner,
         };
     }
+
+    /**
+     * Get current published release versions available of the repository
+     * @returns {Array} [...versions]
+     */
+    public async getPublishedVersions() {
+        const apiUrl = `https://api.github.com/repos/${this.author}/${this.repository}/releases`;
+        try {
+            const response = await axios.get(apiUrl, {
+                headers: {
+                    Authorization: `token ${this.authKey}`
+                }
+            });
+
+            const publishedVersions = response.data
+            .filter(release => !release.prerelease)
+            .map(release => release.tag_name);
+
+            return publishedVersions;
+        } catch (error) {
+            console.error('Error trying to get releases versions:', error.message);
+            return [];
+        }
+    }
+
+    /**
+     * Get current published pre-release versions available of the repository
+     * @returns {Array} [...versions]
+     */
+    public async getPreReleaseVersions() {
+        const apiUrl = `https://api.github.com/repos/${this.author}/${this.repository}/releases`;
+        try {
+            const response = await axios.get(apiUrl, {
+                headers: {
+                    Authorization: `token ${this.authKey}`
+                }
+            });
+      
+          const preReleaseVersions = response.data
+            .filter(release => release.prerelease)
+            .map(release => release.tag_name);
+      
+          return preReleaseVersions;
+        } catch (error) {
+          console.error('Error trying to get pre-release versions:', error.message);
+          return [];
+        }
+    }
+
+    /**
+     * Get all published versions (pre-release and release)
+     * @returns {Array} [...versions]
+     */
+    public async getAllVersions() {
+        const releaseVersions = await this.getPublishedVersions();
+        const preReleaseVersions = await this.getPreReleaseVersions();
+
+        let allVersions = releaseVersions.concat(preReleaseVersions);
+        const uniqueVer = new Set(allVersions);
+        allVersions = [...uniqueVer];
+        return allVersions;
+    }
 }
 
 /**
@@ -335,7 +397,7 @@ class Loader {
                 const path = workflow.path;
                 const workflowName = String(path).split('/').slice(-1)[0]
                 const workflowStatus = await this.getWorkflow(workflowName)
-                
+
                 lastRuns.push(
                     runName,
                     runsUrl,
@@ -347,7 +409,7 @@ class Loader {
 
             return lastRuns;
         } catch (error) {
-            console.error('Error al obtener la última ejecución de los workflows:', error.message);
+            console.error('Error trying to get last workflow status:', error.message);
             return [];
         }
     }
