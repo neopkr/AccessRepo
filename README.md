@@ -71,6 +71,7 @@ There is not other function in the classes because i build it only for read cont
 - [1.0.6](https://github.com/neopkr/AccessRepo/releases/tag/1.0.6) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#106)
 - [1.0.7](https://github.com/neopkr/AccessRepo/releases/tag/1.0.7) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#107)
 - [1.0.8](https://github.com/neopkr/AccessRepo/releases/tag/1.0.8) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#108)
+- [1.0.9](https://github.com/neopkr/AccessRepo/releases/tag/1.0.9) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#109)
 # Changelog
 ### 1.0.1
 First Update, added two new classes:
@@ -158,5 +159,5 @@ Loader.readFileFromTree("1.0.8", 'src/RepositoryLoader.ts').then((content) => {
                 }
         */
 })
-- Changed workflow, deleted npm adduser.
 ```
+- Changed workflow, deleted npm adduser.
