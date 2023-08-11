@@ -71,7 +71,7 @@ There is not other function in the classes because i build it only for read cont
 - [1.0.6](https://github.com/neopkr/AccessRepo/releases/tag/1.0.6) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#106)
 - [1.0.7](https://github.com/neopkr/AccessRepo/releases/tag/1.0.7) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#107)
 - [1.0.8](https://github.com/neopkr/AccessRepo/releases/tag/1.0.8) __Stable__   | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#108)
-- [1.0.9](https://github.com/neopkr/AccessRepo/releases/tag/1.0.9) __Unstable__ | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#109)
+- [1.0.9](https://github.com/neopkr/AccessRepo/releases/tag/1.0.9) __Stable__ | [Changelog](https://github.com/neopkr/AccessRepo/blob/main/README.md#109)
 # Changelog
 ### 1.0.1
 First Update, added two new classes:
@@ -139,12 +139,16 @@ Loader.getWorkflow("npm-publish.yml").then((action) => console.log(action)) // s
 - New functions on Repository class: ```getPublishVersions(), getPreReleaseVersions(), getAllVersions()```, all returns an array with the list of public versions on github.
 - Maybe on next version v1.1.0 Loader class would be deleted and added all functions to Repository class.
 - Error menssages translated it to english.
-- If you having HTTP Status o errors see: [Errors](https://github.com/neopkr/AccessRepo/blob/main/README.md#Errors) section.
+- If you having HTTP Status o errors see: [Errors](https://github.com/neopkr/AccessRepo/#errors) section.
 * _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_
 ### 1.0.9
-- Build not passing: ```readFileFromTree()``` always return null
-- Very light update, added one fundamental function on Loader class
-- New function: ```readFileFromTree(tree: string, filePath: string)``` read file from selected tags or branches, usage example:
+- Bug fix: Build was not passing due to the ```readFileFromTree()``` function always returning null:
+    - Fixed: The ```const file``` for the pathFile included a leading "/", resulting in a null return. Added a slice to prevent this, but it's advisable to avoid adding "/" at the beginning.
+    - Fixed: The function couldn't read folders. This was resolved by creating a new private function to recursively read files and folders.
+    - If you encounter any other issues with this function, please create an [issue](https://github.com/neopkr/AccessRepo/issues) so that we can promptly address it.
+    - Also, added the JSDoc ```@experimental``` tag.
+- This update is quite lightweight, featuring a critical function in the Loader class.
+- New function: ```readFileFromTree(tree: string, filePath: string)``` reads a file from selected tags or branches. Here's an example of its usage:
 ```ts
 Loader.readFileFromTree("1.0.8", 'src/RepositoryLoader.ts').then((content) => {
     if (content === null) { return; }
@@ -153,12 +157,11 @@ Loader.readFileFromTree("1.0.8", 'src/RepositoryLoader.ts').then((content) => {
                 {
                     "name": ...,
                     "path": ...,
-                    "download_url": ...,
-                    "html_url": ...,
                     "content": ...,
-                    "links": { ... },
+                    "url": ...
                 }
         */
 })
 ```
 - Changed workflow, deleted npm adduser.
+* _See [RepositoryLoader.d.ts](https://github.com/neopkr/AccessRepo/blob/main/dist/RepositoryLoader.d.ts) for more info with properties_

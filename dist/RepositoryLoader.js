@@ -367,6 +367,11 @@ class Loader {
                     tree_sha: tree,
                 });
                 const treeData = response.data.tree;
+                // To not return null
+                if (pathFile.startsWith("/")) {
+                    pathFile = pathFile.slice(1);
+                    console.warn('AccessRepo: Loader.readFileFromTree() Warning: Detected that pathFile starts with "/", please consider removing it. Slicing pathFile to prevent returning null.');
+                }
                 const file = treeData.find(item => item.path === pathFile);
                 if (file && file.type === 'blob') {
                     const fileResponse = yield this.kit.request(`GET /repos/{owner}/{repo}/git/blobs/{sha}`, {

@@ -6,7 +6,7 @@ dotenv.config(); // Use local
 describe('Repository', () => {
     const authKey = process.env.AUTH_KEY ?? "";
     const author = "neopkr";
-    const repository = "code-engine"; // using private repository now for test
+    const repository = "testing"; // using private repository now for test | If you're running test please change it to your private repository.
 
     let repo: Repository;
 
@@ -78,7 +78,7 @@ describe('Repository', () => {
 describe('Loader', () => {
     const authKey = process.env.AUTH_KEY ?? ""; // env for action secret
     const author = "neopkr";
-    const repository = "AccessRepo";
+    const repository = "AccessRepo"; // Test passed on private repositories and public
 
     let loader: Loader;
 
@@ -87,7 +87,7 @@ describe('Loader', () => {
     });
 
     it('should read a file successfully', async () => {
-        const pathFile = '/README.md';
+        const pathFile = 'src/RepositoryLoader.ts';
         const fileData = await loader.readFile(pathFile); // Function changed v1.0.7
         expect(fileData).to.not.be.null;
         expect(fileData).to.have.property('name');
@@ -99,15 +99,14 @@ describe('Loader', () => {
     });
 
     it('should read a file from tree successfully', async () => {
-        const pathFile = '/README.md';
-        const fileData = await loader.readFileFromTree("1.0.8", pathFile);
+        const pathFile = 'src/RepositoryLoader.ts'; // In this function please don't add / at the beginning of the path.
+        const fileData = await loader.readFileFromTree("1.0.6", pathFile);
+        console.log(fileData)
         expect(fileData).to.not.be.null;
         expect(fileData).to.have.property('name');
         expect(fileData).to.have.property('path');
-        expect(fileData).to.have.property('download_url');
-        expect(fileData).to.have.property('html_url');
         expect(fileData).to.have.property('content');
-        expect(fileData).to.have.property('links');
+        expect(fileData).to.have.property('url');
     });
 
     it('should retrieve workflow last run status (success, failed, pending, not_found)', async () => { // Success

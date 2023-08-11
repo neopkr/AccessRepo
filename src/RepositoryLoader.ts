@@ -342,7 +342,49 @@ class Loader {
         }
     }
 
+    /**
+     * Retrieves the content of a file from a specific tree or version.
+     * @param tree Tree tag or version from your repository.
+     * @param pathFile Path to the file.
+     * @returns An object with data such as name, path, content, and URL.
+     * @experimental This function may contain bugs.
+     */
     public async readFileFromTree(tree: string, pathFile: string): Promise<any | null> {
+        try {
+            const item = await this.findItemRecursive(tree, pathFile);
+
+            if (item && item.type === 'blob') {
+                const fileResponse = await this.kit.request(`GET /repos/{owner}/{repo}/git/blobs/{sha}`, {
+                    owner: this.author,
+                    repo: this.repository,
+                    sha: item.sha,
+                });
+
+                const fileData = fileResponse.data as {
+                    content: string;
+                    encoding: "base64";
+                    url: string;
+                };
+
+                const decodedContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
+                const data = {
+                    "name": item.path,
+                    "path": pathFile,
+                    "content": decodedContent,
+                    "url": fileData.url,
+                };
+
+                return data;
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error("Error occurred while reading file from tree:", error);
+            throw error;
+        }
+    }
+
+    private async findItemRecursive(tree: string, filePath: string): Promise<any | null> {
         try {
             const response = await this.kit.request(`GET /repos/{owner}/{repo}/git/trees/{tree_sha}`, {
                 owner: this.author,
@@ -359,39 +401,27 @@ class Loader {
                 url: string;
             }>;
 
-            const file = treeData.find(item => item.path === pathFile);
+            const parts = filePath.split('/');
+            const currentPart = parts.shift();
 
-            if (file && file.type === 'blob') {
-                const fileResponse = await this.kit.request(`GET /repos/{owner}/{repo}/git/blobs/{sha}`, {
-                    owner: this.author,
-                    repo: this.repository,
-                    sha: file.sha,
-                });
+            if (currentPart) {
+                const currentItem = treeData.find(item => item.path === currentPart);
 
-                const fileData = fileResponse.data as {
-                    content: string;
-                    encoding: "base64";
-                    url: string;
-                };
-
-                const decodedContent = Buffer.from(fileData.content, 'base64').toString('utf-8');
-                const data = {
-                    "name": pathFile,
-                    "path": file.path,
-                    "content": decodedContent,
-                    "url": fileData.url,
-                };
-
-                return data;
-            } else {
-                return null;
+                if (currentItem) {
+                    if (parts.length === 0) {
+                        return currentItem;
+                    } else if (currentItem.type === 'tree') {
+                        return this.findItemRecursive(currentItem.sha, parts.join('/'));
+                    }
+                }
             }
+
+            return null;
         } catch (error) {
-            console.error("Error occurred while reading file from tree:", error);
+            console.error("Error occurred while searching for item:", error);
             throw error;
         }
     }
-
 
     /**
      * Retrive Workflow last run information
