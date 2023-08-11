@@ -101,7 +101,6 @@ describe('Loader', () => {
     it('should read a file from tree successfully', async () => {
         const pathFile = 'src/RepositoryLoader.ts'; // In this function please don't add / at the beginning of the path.
         const fileData = await loader.readFileFromTree("1.0.6", pathFile);
-        console.log(fileData)
         expect(fileData).to.not.be.null;
         expect(fileData).to.have.property('name');
         expect(fileData).to.have.property('path');

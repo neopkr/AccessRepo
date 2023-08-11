@@ -122,7 +122,15 @@ declare class Loader {
     * }
     */
     readFile(pathFile: string): Promise<any | null>;
+    /**
+     * Retrieves the content of a file from a specific tree or version.
+     * @param tree Tree tag or version from your repository.
+     * @param pathFile Path to the file.
+     * @returns An object with data such as name, path, content, and URL.
+     * @experimental This function may contain bugs.
+     */
     readFileFromTree(tree: string, pathFile: string): Promise<any | null>;
+    private findItemRecursive;
     /**
      * Retrive Workflow last run information
      * @param workflow Name of your workflow, example: npm-workflow.yml
